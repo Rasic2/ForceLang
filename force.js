@@ -13,14 +13,13 @@ fs.readFile("./POSCAR", "utf-8", (err, text) => {
     Relaxed = /T/;
 
     // relaxed atoms indexes
-    let relaxed_indexes = [];
+    relaxed_indexes = [];
     for (i in coords) {
       if (Relaxed.exec(coords[i])) {
         relaxed_indexes.push(Number(i));
       }
     }
   }
-
   fs.readFile("./OUTCAR", "utf8", (err, text) => {
     if (err) {
       console.error(err);
@@ -56,6 +55,7 @@ fs.readFile("./POSCAR", "utf-8", (err, text) => {
       // arrow func => sum(sum(f_i **2) for each atom)
       let step_force = (x) => {
         let inner_force = [];
+
         for (atom_index in x) {
           atom_list = [];
           if (relaxed_indexes.indexOf(Number(atom_index)) != -1) {
